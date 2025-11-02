@@ -785,6 +785,7 @@ async def test_extended_thinking(
     assert chat_log.content[2].content == "Hello, how can I help you today?"
 
 
+@freeze_time("2024-05-24 12:00:00")
 async def test_redacted_thinking(
     hass: HomeAssistant,
     mock_config_entry_with_extended_thinking: MockConfigEntry,
@@ -911,6 +912,7 @@ async def test_extended_thinking_tool_call(
     assert mock_create.mock_calls[1][2]["messages"] == snapshot
 
 
+@freeze_time("2025-10-31 12:00:00")
 async def test_web_search(
     hass: HomeAssistant,
     mock_config_entry_with_web_search: MockConfigEntry,
