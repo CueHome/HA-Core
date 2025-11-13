@@ -93,26 +93,25 @@ async def async_setup_entry(
         entities: list[TuyaFanEntity] = []
         for device_id in device_ids:
             device = manager.device_map[device_id]
-            if device.category in TUYA_SUPPORT_TYPE:
-                if _has_a_valid_dpcode(device):
-                    entities.append(
-                        TuyaFanEntity(
-                            device,
-                            manager,
-                            direction_wrapper=_DirectionEnumWrapper.find_dpcode(
-                                device, _DIRECTION_DPCODES, prefer_function=True
-                            ),
-                            mode_wrapper=DPCodeEnumWrapper.find_dpcode(
-                                device, _MODE_DPCODES, prefer_function=True
-                            ),
-                            oscillate_wrapper=DPCodeBooleanWrapper.find_dpcode(
-                                device, _OSCILLATE_DPCODES, prefer_function=True
-                            ),
-                            switch_wrapper=DPCodeBooleanWrapper.find_dpcode(
-                                device, _SWITCH_DPCODES, prefer_function=True
-                            ),
-                        )
+            if device.category in TUYA_SUPPORT_TYPE and _has_a_valid_dpcode(device):
+                entities.append(
+                    TuyaFanEntity(
+                        device,
+                        manager,
+                        direction_wrapper=_DirectionEnumWrapper.find_dpcode(
+                            device, _DIRECTION_DPCODES, prefer_function=True
+                        ),
+                        mode_wrapper=DPCodeEnumWrapper.find_dpcode(
+                            device, _MODE_DPCODES, prefer_function=True
+                        ),
+                        oscillate_wrapper=DPCodeBooleanWrapper.find_dpcode(
+                            device, _OSCILLATE_DPCODES, prefer_function=True
+                        ),
+                        switch_wrapper=DPCodeBooleanWrapper.find_dpcode(
+                            device, _SWITCH_DPCODES, prefer_function=True
+                        ),
                     )
+                )
         async_add_entities(entities)
 
     async_discover_device([*manager.device_map])
